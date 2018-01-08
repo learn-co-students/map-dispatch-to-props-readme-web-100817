@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import './App.css';
-import { connect } from 'react-redux';
-import { addItem } from  './actions/items';
+import React, { Component } from "react";
+import "./App.css";
+import { connect } from "react-redux";
+import { addItem } from "./actions/items";
 
 class App extends Component {
-
   handleOnClick() {
     this.props.store.dispatch(addItem());
   }
@@ -12,19 +11,27 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <button onClick={(event) => this.handleOnClick(event)}>
-          Click
-          </button>
+        <button onClick={event => this.handleOnClick(event)}>Click</button>
         <p>{this.props.items.length}</p>
       </div>
     );
   }
-};
+}
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     items: state.items
   };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  /* code change */
+  return bindActionCreators(
+    {
+      addItem: addItem
+    },
+    dispatch
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
